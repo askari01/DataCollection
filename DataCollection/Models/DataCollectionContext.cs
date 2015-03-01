@@ -20,5 +20,7 @@ namespace DataCollection.Models
         }
 
         public System.Data.Entity.DbSet<DataCollection.Models.Teachers> Teachers { get; set; }
+
+        public System.Data.Entity.DbSet<DataCollection.Models.Student> Students { get; set; }
     }
 }
