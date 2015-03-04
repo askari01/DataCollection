@@ -8,17 +8,12 @@ namespace DataCollection.Models
 {
     public class Student
     {
-        public int ID { get; set; }
+        public int StudentID { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage ="Enter First Name")]
-        [Display(Name ="First Name")]
-        public string FName { get; set; }
-
-        [Required]
-        [StringLength(15, ErrorMessage = "Enter Last Name")]
-        [Display(Name = "Last Name")]
-        public string LName { get; set; }
+        [StringLength(15, ErrorMessage ="Enter Student Name")]
+        [Display(Name ="Student Name")]
+        public string Name { get; set; }
 
         [Required]
         [StringLength(15, ErrorMessage = "Enter Registration Number (complete)")]
@@ -27,5 +22,8 @@ namespace DataCollection.Models
 
         [Required(ErrorMessage ="Enter Batch Number")]
         public int Batch { get; set; }
+
+        public virtual List<Project> Project { get; set; }
+
     }
 }

@@ -8,17 +8,12 @@ namespace DataCollection.Models
 {
     public class Teachers
     {
-        public int ID { get; set; }
+        public int TeachersID { get; set; }
 
         [Required]
-        [StringLength(100,ErrorMessage ="Enter First Name")]
-        [Display(Name = "First Name")]
-        public string FName { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "Enter Last Name")]
-        [Display(Name = "Last Name")]
-        public string LName { get; set; }
+        [StringLength(100,ErrorMessage ="Enter Teacher Name")]
+        [Display(Name = "Teacher Name")]
+        public string Name { get; set; }
 
         //[Display(Name = "First Name")]
         [Required]
@@ -33,5 +28,7 @@ namespace DataCollection.Models
 
         [Display(Name = "Project Coordinator")]
         public Boolean ProjCoordinator { get; set; }
+
+        public virtual List<Project> Project { get; set; }
     }
 }
