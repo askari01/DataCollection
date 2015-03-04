@@ -10,107 +10,116 @@ using DataCollection.Models;
 
 namespace DataCollection.Controllers
 {
-    public class TeachersController : Controller
+    public class ProjectsController : Controller
     {
         private DataCollectionContext db = new DataCollectionContext();
 
-        // GET: Teachers
+        // GET: Projects
         public ActionResult Index()
         {
-            return View(db.Teachers.ToList());
+            var projects = db.Projects.Include(p => p.Student).Include(p => p.Teachers);
+            return View(projects.ToList());
         }
 
-        // GET: Teachers/Details/5
+        // GET: Projects/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Teachers teachers = db.Teachers.Find(id);
-            if (teachers == null)
+            Project project = db.Projects.Find(id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(teachers);
+            return View(project);
         }
 
-        // GET: Teachers/Create
+        // GET: Projects/Create
         public ActionResult Create()
         {
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "Name");
+            ViewBag.TeachersID = new SelectList(db.Teachers, "TeachersID", "Name");
             return View();
         }
 
-        // POST: Teachers/Create
+        // POST: Projects/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeachersID,Name,Designation,PREC,EC,ProjCoordinator")] Teachers teachers)
+        public ActionResult Create([Bind(Include = "ID,StudentID,TeachersID,ProjectName,Discription")] Project project)
         {
             if (ModelState.IsValid)
             {
-                db.Teachers.Add(teachers);
+                db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(teachers);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "Name", project.StudentID);
+            ViewBag.TeachersID = new SelectList(db.Teachers, "TeachersID", "Name", project.TeachersID);
+            return View(project);
         }
 
-        // GET: Teachers/Edit/5
+        // GET: Projects/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Teachers teachers = db.Teachers.Find(id);
-            if (teachers == null)
+            Project project = db.Projects.Find(id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(teachers);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "Name", project.StudentID);
+            ViewBag.TeachersID = new SelectList(db.Teachers, "TeachersID", "Name", project.TeachersID);
+            return View(project);
         }
 
-        // POST: Teachers/Edit/5
+        // POST: Projects/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeachersID,Name,Designation,PREC,EC,ProjCoordinator")] Teachers teachers)
+        public ActionResult Edit([Bind(Include = "ID,StudentID,TeachersID,ProjectName,Discription")] Project project)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(teachers).State = EntityState.Modified;
+                db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(teachers);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "Name", project.StudentID);
+            ViewBag.TeachersID = new SelectList(db.Teachers, "TeachersID", "Name", project.TeachersID);
+            return View(project);
         }
 
-        // GET: Teachers/Delete/5
+        // GET: Projects/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Teachers teachers = db.Teachers.Find(id);
-            if (teachers == null)
+            Project project = db.Projects.Find(id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(teachers);
+            return View(project);
         }
 
-        // POST: Teachers/Delete/5
+        // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Teachers teachers = db.Teachers.Find(id);
-            db.Teachers.Remove(teachers);
+            Project project = db.Projects.Find(id);
+            db.Projects.Remove(project);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
