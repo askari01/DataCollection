@@ -1,4 +1,5 @@
-﻿using DataCollection.Models;
+﻿using DataCollection.Controllers;
+using DataCollection.Models;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -15,7 +16,8 @@ namespace DataCollection
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataCollectionContext>());
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataCollectionContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<DataCollectionContext>());
         }
     }
 }
